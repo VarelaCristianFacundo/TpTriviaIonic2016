@@ -1,44 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, $timeout) {
-   $scope.usuario =[];
-   $scope.usuarios={};
+.controller('DashCtrl', function($scope, $timeout, $state) {
 
-    var userRef = new Firebase('https://tp1trivia.firebaseio.com/usuarios');
+  $('#deslogin').on('click', function(){
 
-    userRef.on('child_added', function (snapshot) {
-    $timeout(function(){
-
-    var user = snapshot.val();
-    $scope.usuario.push(user);
-//    console.log($scope.usuario);
-
-    });
-   });
-
-
-  $('#login').on('click', function(){
-
-    var username = $("#nombre").val();
-    var flag = 0;
-  //alert ("Bienvenido "+username);
-
-        for(var ref in $scope.usuario)
-        {           
-            if ($scope.usuario[ref] === username)
-            {
-                flag = 1;
-                break;
-            }
-        }
-        if (flag == 1)
-        {
-            alert ("Bienvenido " + username);
-        }
-        else
-        {
-            alert ("Usted no es usuario");
-        }
+    alert ("¡Hasta luego!");
+    $state.go('login');
 
   })
 })
@@ -47,38 +14,49 @@ angular.module('starter.controllers', [])
  
 $scope.preguntas= [];
 $scope.respuestas={};
+$scope.question;
+$scope.opcSelected={};
+$scope.option = [];
+
+var id=1;
 
   var pregRef = new Firebase('https://tp1trivia.firebaseio.com/preguntas');
 
     pregRef.on('child_added', function (snapshot) {
+    
     $timeout(function(){
 
     var preg = snapshot.val();
-   // console.log(preg);
     $scope.preguntas.push(preg);
     $scope.respuestas[preg.id] = preg.respuesta;
-
+    if (preg.id == id)
+    {
+      $scope.question = $scope.preguntas[id];
+      alert($scope.preguntas[1]);
+      $scope.option = preg.opciones;
+      //console.log (preg.opciones);
+    }    
+    
     });
    });
 
-$scope.opcSelected = {};
+    
+
 
   $("#enviar").on('click', function(){
-    
+    id++;
+    $scope.question = $scope.preguntas[id];
+    $scope.option = $scope.preguntas[id].opciones;
     $scope.respOK = 0; //contador de respuestas OK
     $scope.respFail = 0;
 
-        for(var respuesta in $scope.respuestas)
-        {           
-            if ($scope.respuestas[respuesta] === $scope.opcSelected[respuesta]){
-       //         alert("Respuesta BIEN");
-                $scope.respOK ++;
-            }
-            else{
-                $scope.respFail++;
-         //       alert("Respuesta MAL");   
-            }
-        }
+    console.log($scope.preguntas[id].respuesta);
+    console.log($scope.opcSelected);
+    if ($scope.preguntas[id].respuesta === $scope.opcSelected)
+    {
+      alert ("Bien pelotudo");
+    }        
+
   });
 
 })
