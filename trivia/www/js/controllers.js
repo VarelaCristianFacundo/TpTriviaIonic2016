@@ -10,15 +10,18 @@ angular.module('starter.controllers', [])
   })
 })
 
-.controller('ChatsCtrl', function($scope, Chats, $timeout) {
+.controller('ChatsCtrl', function($scope, Chats, $timeout, $state) {
  
 $scope.preguntas= [];
 $scope.respuestas={};
 $scope.question;
 $scope.opcSelected={};
-$scope.option = [];
+$scope.option = {};
+$scope.respOK = 0; //contador de respuestas OK
+$scope.respFail = 0;
 
-var id=1;
+var bandera=true;
+var id=0;
 
   var pregRef = new Firebase('https://tp1trivia.firebaseio.com/preguntas');
 
@@ -29,10 +32,11 @@ var id=1;
     var preg = snapshot.val();
     $scope.preguntas.push(preg);
     $scope.respuestas[preg.id] = preg.respuesta;
-    if (preg.id == id)
+    if (bandera)
     {
-      $scope.question = $scope.preguntas[id];
-      alert($scope.preguntas[1]);
+      bandera = false;
+      $scope.question = preg;
+   //   console.log(preg);
       $scope.option = preg.opciones;
       //console.log (preg.opciones);
     }    
@@ -45,17 +49,38 @@ var id=1;
 
   $("#enviar").on('click', function(){
     id++;
+    console.log($scope.preguntas[id]);
     $scope.question = $scope.preguntas[id];
     $scope.option = $scope.preguntas[id].opciones;
-    $scope.respOK = 0; //contador de respuestas OK
-    $scope.respFail = 0;
 
-    console.log($scope.preguntas[id].respuesta);
-    console.log($scope.opcSelected);
-    if ($scope.preguntas[id].respuesta === $scope.opcSelected)
-    {
-      alert ("Bien pelotudo");
-    }        
+
+ //   console.log($scope.preguntas[id].respuesta);
+    
+   // console.log($scope.opcSelected);
+    for (ref in $scope.opcSelected)
+    { 
+      //console.log ($scope.preguntas[id-1].respuesta);
+      //console.log ($scope.opcSelected[ref]);
+      console.log ($scope.preguntas.length);
+      console.log (id);
+        if ($scope.preguntas[id-1].respuesta == $scope.opcSelected[ref])
+        {
+           $scope.respOK ++; //contador de respuestas OK
+           //break;
+        } 
+        else
+        {
+           $scope.respFail ++;
+           //break;
+        }
+      
+        if(id == $scope.preguntas.length -1)
+        {
+         alert ("Respuestas correctas: " + $scope.respOK + "\n" + "Respuestas erróneas: " + $scope.respFail);
+         $state.go('tab-account');
+        }
+      }
+             
 
   });
 

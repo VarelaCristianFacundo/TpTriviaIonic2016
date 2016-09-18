@@ -1,10 +1,10 @@
 <ion-view view-title="Preguntas">
   <ion-content>
-  
+  <div>
+  <img src="img/ionic.png" style="display: inline; width:30px;">
+  <h3 style="display: inline;">{{question.pregunta}}</h3>
+  </div>
       <ion-item class="item-avatar" type="item-text-wrap">
-        <img src="img/ionic.png">
-        <h2>{{question.pregunta}}</h2>
-
         <ion-radio name="{{question}}" class="item-remove-animate item-avatar" ng-repeat="(key, value) in option" type="item-text-wrap" ng-model="opcSelected[question]" value="{{key}}">
         {{value}}
       </ion-item>
