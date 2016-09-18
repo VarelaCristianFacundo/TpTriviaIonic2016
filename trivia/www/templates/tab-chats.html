@@ -1,0 +1,24 @@
+<ion-view view-title="Preguntas">
+  <ion-content>
+  
+      <ion-list>
+      <ion-item class="item-remove-animate item-avatar" ng-repeat="pregunta in preguntas" type="item-text-wrap">
+        <img src="../img/interro.jpg">
+        <h2>{{pregunta.pregunta}}</h2>
+
+        <ion-radio name="{{pregunta}}" class="item-remove-animate item-avatar" ng-repeat="(key, opcion) in pregunta.opciones" type="item-text-wrap" ng-model="opcSelected[pregunta.id]" value="{{key}}">
+        {{opcion}}
+      </ion-item>
+    </ion-list> 
+
+
+    <button class="button button-block button-positive" id="enviar">ENVIAR</button>
+
+<p>Respuestas elegidas : {{opcSelected}}</p>
+  <p>Respuestas Correctas: {{respOK}}</p>
+    <p>Respuestas Incorrectas: {{respFail}}</p>
+
+
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,19 @@
+<ion-view view-title="Chats">
+  <ion-content>
+  <!--div class="list card" ng-repeat="pregunta in preguntas"-->
+<!--  <strong>{{mensaje.mensaje}}</strong></div>-->
+  
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="pregunta in preguntas" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+        <img src="../img/interrogante.jpg">
+        <h2>{{pregunta.pregunta}}</h2>
+        <p>{{pregunta.opciones}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list> 
+  </ion-content>
+</ion-view>
