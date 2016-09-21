@@ -45,11 +45,21 @@ var id=0;
    });
 
     
+$scope.Elegida = function(){
+    $scope.elegida = false;
+    $scope.boton = true;
+    
+  }
+
+$scope.Boton = function(){
+    $scope.elegida = false;
+    $scope.boton = true;
+    
+  }
 
 
   $("#enviar").on('click', function(){
     id++;
-    console.log($scope.preguntas[id]);
     $scope.question = $scope.preguntas[id];
     $scope.option = $scope.preguntas[id].opciones;
 
@@ -77,7 +87,7 @@ var id=0;
         if(id == $scope.preguntas.length -1)
         {
          alert ("Respuestas correctas: " + $scope.respOK + "\n" + "Respuestas erróneas: " + $scope.respFail);
-         $state.go('tab-account');
+         $state.go('tab.account');
         }
       }
              

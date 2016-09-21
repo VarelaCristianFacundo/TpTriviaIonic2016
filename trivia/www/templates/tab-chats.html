@@ -4,13 +4,13 @@
   <img src="img/ionic.png" style="display: inline; width:30px;">
   <h3 style="display: inline;">{{question.pregunta}}</h3>
   </div>
-      <ion-item class="item-avatar" type="item-text-wrap">
-        <ion-radio name="{{question}}" class="item-remove-animate item-avatar" ng-repeat="(key, value) in option" type="item-text-wrap" ng-model="opcSelected[question]" value="{{key}}">
+      <ion-item>
+        <ion-radio ng-disabled="elegida" ng-click="Elegida()" name="{{question}}" class="item-remove-animate item-avatar" ng-repeat="(key, value) in option" type="item-text-wrap" ng-model="opcSelected[question]" value="{{key}}">
         {{value}}
       </ion-item>
 
 
-    <button class="button button-block button-positive" id="enviar">Responder</button>
+    <button ng-disabled="!boton" ng-click="Boton()" class="button button-block button-positive" id="enviar">Responder</button>
 
 <p>Respuestas elegidas : {{opcSelected}}</p>
   <p>Respuestas Correctas: {{respOK}}</p>
